@@ -8,7 +8,7 @@ import archive from '../../assets/icons/Box.svg';
 import { useState } from 'react';
 
 const Sidebar = () => {
-  const [click , setClick] = useState(false);
+  const [click , setClick] = useState(true);
 
   const toggleClass = () => {
     setClick(!click);
@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   return <div className='sidebar'>
     <div className="logo">
-      <img className="logo-image" src={logo} onClick={toggleClass}/>
+      <img className={(click?"rotate":"rotate")} src={logo} onClick={toggleClass}/>
     </div>
       <button className='upload'>
         <img className='upload-icon' src={upload}/>

@@ -1,11 +1,137 @@
-@use './sidebar';
-@use './header';
+@use '../../assets/styles/abstracts/colors' as * ;
+body {
+  max-width: 1373px;
+  margin: auto;
+  padding: 27px 31px;
+}
 .main-layout {
   display: flex;
-  padding: 30px;
   & > .container {
     display: flex;
     flex-direction: column;
-    width: 90%;
   }
 }
+/* styles of sidebar */
+.sidebar{
+  .logo {
+    img {
+      width: 49px;
+    }
+  }
+  
+ 
+    .upload {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #610BEF;
+      width: 196px;
+      height: 65px;
+      border-radius: 10px;
+      color: white;
+      border: 0;
+      margin-top: 46px;
+      .upload-text{
+        font-size: 19px;
+        margin-left: 19px;
+      }
+    }
+    .hidden {
+      display: none;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      margin-top: 44px;
+          .active {
+            display: flex;
+            text-decoration: none;
+            color: $text-muted;
+            .menu-text{
+              margin-left: 19px;
+              font-size: 21px;
+            }
+          }
+        .active:hover {
+          filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(62deg) brightness(0%) contrast(100%)
+        }
+    }
+  }
+
+  /* styles of header */
+  .header{
+   
+    margin-left: 88px;
+    display: flex;
+    justify-content: space-between;
+    .search{
+        background-color: $search-background;
+        width: 633px;
+        display: flex;
+        padding-top:18px ;
+        padding-bottom: 20px;
+        border-radius: 12px;
+        & > img{
+            margin-left: 23px;
+        }
+    }
+    
+    input{
+        border: none;
+        background-color: $search-background;
+       font-size: 18px;
+       color: $text-muted;
+       margin-left: 18px;
+    }
+     input:focus{
+        
+            outline: none;
+            color: $text-black;
+        
+    }
+    .preferences{
+        display: flex;
+        margin-left: 130px;
+        .setting{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid $icon-color;
+            border-radius: 12px;
+            width: 71px;
+        }
+        .notifications{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            border: 1px solid $icon-color;
+            margin-left: 18px;
+            width: 99px;
+            border-radius: 12px;
+
+            .counter{
+                margin-left: 12px;
+                color: #423f5c;
+            }
+        }
+       
+    }
+    .profil{
+        display: flex;
+        margin-left: 28px;
+        align-items: center;
+        .username{
+            color: #423f5c;
+            font-size: 14px;
+        }
+        img{
+            width: 49px;
+            height: 49px;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+    }
+}
+

@@ -9,7 +9,7 @@ const Header = () => {
                   <img className="search-img" src={search} />
                   <input 
                   type="text"
-                  placeholder="search"
+                  placeholder="Search"
                   />
                 </div>
                   <div className='preferences'>
@@ -21,7 +21,7 @@ const Header = () => {
                         <div className='counter'>18</div>
                         </div>
                     <div className='profil'>
-                      <div className='username'>User</div>
+                      <div className='username'>Achref</div>
                       <img  src={profil} />
                     </div>
                   </div>
