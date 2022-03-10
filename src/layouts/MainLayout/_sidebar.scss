@@ -1,0 +1,43 @@
+@use '../../assets/styles/abstracts/index' as *;
+
+
+.sidebar{
+
+    .upload {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #610BEF;
+      width: 194px;
+      height: 63px;
+      border-radius: 10px;
+      color: white;
+      border: 0;
+      margin-top: 46px;
+
+      .upload-text{
+        margin-left: 17px;
+      }
+    }
+    .hidden {
+      display: none;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+      margin-top: 35px;
+          .active {
+            display: flex;
+            text-decoration: none;
+            color: $text-muted;
+            .menu-text{
+              margin-left: 13px;
+            }
+          }
+        .active:hover {
+          filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(62deg) brightness(0%) contrast(100%)
+        }
+    }
+  }
+  

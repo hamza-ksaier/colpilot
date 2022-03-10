@@ -1,7 +1,11 @@
+@use './sidebar';
+@use './header';
 .main-layout {
   display: flex;
+  padding: 30px;
   & > .container {
     display: flex;
     flex-direction: column;
+    width: 90%;
   }
 }
