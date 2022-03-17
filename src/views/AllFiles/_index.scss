@@ -1,0 +1,117 @@
+@use '../../assets/styles/abstracts/colors' as *;
+/* style of showcase */
+.show-case {
+    margin-top: 42px;
+    display: flex;
+    justify-content: space-between;
+    width: 1026px;
+.logo-files {
+    display: flex;
+    gap: 23px;
+
+    .allFiles-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 56px;
+        height: 56px;
+        background-color: $secondary ;
+        border-radius: 12px;
+        img {
+            filter: brightness(0) invert(1);
+           transform: scale(1.5);
+        } 
+    }
+    .title b {
+        display: flex;
+        align-items: center;
+        font-size: 40px;
+    }
+}
+.selection {
+    #date-size {
+        width: 225px;
+        background-color: #eff0f6;
+        color: $text-muted;
+        border-radius: 15px;
+        border: 0;
+        padding-left: 20px;
+        font-size: 18px;
+        appearance: none;
+        height: 56px;
+    }
+    .select-button {
+        position: relative;
+        right: 35px;
+        top: 3px;
+        pointer-events: none;
+        transform: scale(1.5);
+    }
+}
+}
+/* Style Of table */
+table {
+    width: 1010px;
+    margin-top: 28px;
+}
+ td {
+    padding: 12px 0 12px ;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+  th {
+    font-size: 13px;
+    color: $text-muted;
+    text-align: left;
+  }
+  tr{
+    transition: all .2s ease-in;
+    cursor: pointer;
+     td:first-child {
+         width: 3%;
+     }
+  }
+  th:last-child {
+    text-align: right;
+    }
+    tr:hover:first-child {
+   transform: none;
+   box-shadow: none;
+    }
+  tr:hover{
+      transform: scale(1.02);
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2 ), -1px -1px 8px
+      rgba(0,0,0,0.2);
+      border-radius: 8px;
+    }
+    .buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 32px;
+        width: 32px;
+        border: 0;
+        border-radius: 50%;
+        img {
+            filter: brightness(0) invert(1);
+        }        
+    }
+    .starred-button {
+        background-color: $quaternary;
+    }
+    .archived-button {
+        background-color: $quinary;
+    }
+     /*media query */
+  @media only screen and (max-width: 768px) {
+    table {
+        width: 90%;
+    }
+  }
+
+ 

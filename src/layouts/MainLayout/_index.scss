@@ -6,9 +6,12 @@ body {
 }
 .main-layout {
   display: flex;
+  justify-content: space-between;
+  gap: 87px;
   & > .container {
     display: flex;
     flex-direction: column;
+    width: 1090px;
   }
 }
 /* styles of sidebar */
@@ -39,30 +42,33 @@ body {
     .hidden {
       display: none;
     }
+    nav {
+      text-decoration: none;
     .menu {
       display: flex;
       flex-direction: column;
       gap: 48px;
       margin-top: 44px;
+        
+          }
           .active {
             display: flex;
             text-decoration: none;
-            color: $text-muted;
-            .menu-text{
-              margin-left: 19px;
-              font-size: 21px;
-            }
           }
-        .active:hover {
-          filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(62deg) brightness(0%) contrast(100%)
-        }
-    }
+          .active:hover {
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(62deg) brightness(0%) contrast(100%)
+          }
+        
+          .menu-text{
+            margin-left: 19px;
+            font-size: 21px;
+            color: $text-muted;
+            }
   }
+}
 
   /* styles of header */
   .header{
-   
-    margin-left: 88px;
     display: flex;
     justify-content: space-between;
     .search{

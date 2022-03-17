@@ -3,3 +3,11 @@
 @use "./layouts/MainLayout";
 
 @use "./components/LoadingScreen";
+
+@use "./views/Home";
+
+@use "./views/AllFiles";
+
+@use "./views/Starred";
+
+@use "./views/Archived";

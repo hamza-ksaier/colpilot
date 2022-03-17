@@ -1,0 +1,171 @@
+@use '../../assets/styles/abstracts/colors' as *;
+.home {
+    margin-top: 37px;
+    .statistics {
+        width: 1009px;
+       display: flex;
+       gap: 24px;
+    }
+    // style of card 
+    .card{
+        width: 289px;
+        height: 218px;
+        padding: 32px;
+        border-radius: 18px;
+        background-color: $card-background;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    
+        & > .logo-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 73px;
+            height: 72px;
+            border-radius: 15px;
+            background-color: $primary;
+            img {
+              filter: brightness(0) invert(1);
+              transform: scale(1.25);
+            }
+        }
+        .name-card{
+            font-size: 21px;
+        }
+        .progress {
+            background: $progress-background;
+            justify-content: flex-start;
+            border-radius: 100px;
+            align-items: center;
+            position: relative;
+            display: flex;
+            height: 12px;
+            width: 254px;
+          }
+          
+          .progress-value {
+            animation: load 3s normal forwards;
+            box-shadow: 0 10px 40px -10px #fff;
+            border-radius: 100px;
+            background: $primary;
+            height: 12px;
+            width: 0;
+          }
+          
+          @keyframes load {
+            0% { width: 0; }
+            100% { width: 39%; }
+          }
+          .final-row {
+            display: flex;
+            gap: 14px;
+            margin-top: 4px;
+
+            .percentage{
+              font-size: 18px;
+            }
+            .size{
+              font-size: 13px;
+              color: $text-muted;
+              margin-top: 5px;
+            }
+          }
+
+          // style of card images 
+          .logo-card-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 73px;
+            height: 72px;
+            border-radius: 15px;
+            background-color: $secondary;
+            img {
+              filter: brightness(0) invert(1);
+              transform: scale(1.25);
+            }
+          }
+          .last-part {
+            .progress-value-images {
+              animation: load 3s normal forwards;
+              box-shadow: 0 10px 40px -10px #fff;
+              border-radius: 100px;
+              background: $secondary;
+              height: 12px;
+              width: 0;
+            }
+          }
+
+          // style of card videos 
+          .logo-card-video {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 73px;
+            height: 72px;
+            border-radius: 15px;
+            background-color: $tertiary;
+            img {
+              filter: brightness(0) invert(1);
+              transform: scale(1.25);
+            }
+          }
+          .last-part {
+            .progress-value-videos{
+              animation: load 3s normal forwards;
+              box-shadow: 0 10px 40px -10px #fff;
+              border-radius: 100px;
+              background: $tertiary;
+              height: 12px;
+              width: 0;
+            }
+          }
+    }
+}
+     // style of recent files *
+ .recentFiles {
+   display: flex;
+   margin-top: 50px;
+   .files {
+   width: 660px;
+   .title {
+    font-size: 40px;
+   }
+   /* style of table recent files */
+   table {
+     width: auto;
+     td:first-child {
+       padding-right: 10px;
+     }
+     th:last-child {
+       text-align: left;
+     }
+   }
+  }
+   /* style of starred files */
+   .information-files {
+     display: flex;
+     flex-direction: column;
+     .starred-files {
+       display: flex;
+       padding: 32px;
+       width: 320px;
+       background-color: $card-background;
+ 
+       .logo-files {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 56px;
+        height: 56px;
+        background-color: $quaternary;
+        border-radius: 12px;
+        img {
+          filter: brightness(0) invert(1);
+          transform: scale(1.5);
+        }
+       }
+     }
+   }
+ }

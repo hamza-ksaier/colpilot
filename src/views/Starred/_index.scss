@@ -1,0 +1,22 @@
+/* Import of colors */ 
+@use '../../assets/styles/abstracts/colors' as *;
+/* difference of style */ 
+.starred {
+    .show-case {
+        .logo-files {
+            .allFiles-image {
+                background-color: $quaternary;
+                    }
+                }
+    }
+    .buttons {
+        button {
+            background-color: $quinary;
+        }
+        .trash {
+            filter: brightness(0) invert(1);
+            transform: scale(1.8);
+        }
+    }
+}
+
