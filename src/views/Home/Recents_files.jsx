@@ -49,13 +49,17 @@ const RecentFiles = () => {
             <div className='logo-files'>
                     <img src={starred}/>
               </div>
+              <div className='title-description'>
               <div className="title">
                   4  Starred Files
              </div>
-          </div>
              <div className='view-file'> 
              <NavLink to="/starred" > Go to view</NavLink>
              </div>
+                </div>
+             
+          </div>
+             
             
               </div>
             <div className='archived-files'>

@@ -152,6 +152,7 @@
        padding: 32px;
        width: 320px;
        background-color: $card-background;
+       border-radius: 14px;
  
        .logo-files {
         display: flex;
@@ -161,11 +162,25 @@
         height: 56px;
         background-color: $quaternary;
         border-radius: 12px;
+      
+        
         img {
           filter: brightness(0) invert(1);
           transform: scale(1.5);
         }
        }
+       .title-description{
+        margin-left: 20px;
+        .view-file  {
+          a {
+            text-decoration: none;
+            color: $text-muted;
+          }
+        }
+      }
      }
    }
  }
+*{
+  border: 1px solid;
+}
