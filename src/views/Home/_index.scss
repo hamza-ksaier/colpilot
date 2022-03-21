@@ -147,14 +147,18 @@
    .information-files {
      display: flex;
      flex-direction: column;
-     .starred-files {
+     margin-top: 13px;
+     margin-left: 26px;
+     gap: 25px;
+     .starred-archived {
+       box-sizing: border-box;
        display: flex;
        padding: 32px;
        width: 320px;
        background-color: $card-background;
        border-radius: 14px;
- 
-       .logo-files {
+       height: 120px;
+       .logo-files-starred {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -169,18 +173,31 @@
           transform: scale(1.5);
         }
        }
+       .logo-files-archived {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 56px;
+        height: 56px;
+        background-color: $quinary;
+        border-radius: 12px;
+      
+        
+        img {
+          filter: brightness(0) invert(1);
+          transform: scale(1.5);
+        }
+       }
        .title-description{
         margin-left: 20px;
         .view-file  {
           a {
             text-decoration: none;
             color: $text-muted;
+            font-size: 18px;
           }
         }
       }
      }
    }
  }
-*{
-  border: 1px solid;
-}
