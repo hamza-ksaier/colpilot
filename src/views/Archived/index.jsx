@@ -2,11 +2,16 @@ import FILES from '../../constants/files';
 import image from '../../assets/icons/Image.svg';
 import video from '../../assets/icons/Video.svg';
 import Box from '../../assets/icons/Box.svg';
+import File from '../../assets/icons/File.svg';
 import bytesToSize from '../../utils/bytesToSize';
 import { BsChevronDown } from "react-icons/bs";
 import {HiOutlineTrash} from "react-icons/hi";
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteArchivedFile } from '../../store/slices/files';
 
 const Archived = () => {
+  const dispatch = useDispatch();
+  const {files} = useSelector((state)=> state.files);
   return <div className='archived'>
       <div className="show-case">
         <div className='logo-files'>
@@ -36,27 +41,31 @@ const Archived = () => {
          <th>Size</th>
          <th>Actions</th>
        </tr>
-       {FILES.filter((file) => file.isArchived === true)
+       {files.filter((file) => file.isArchived === true)
        .map((file, ind) => { 
          const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
          let d = new Date(file.createdAt);
          let type = undefined;
-         if ((file.type === 'jpg') || (file.type ==='png') || (file.type === 'gif')) {
-         type = image;
-         }else if ((file.type === 'txt') || (file.type === 'pdf')) {
-           type = File;
-         } else {
-           type = video;
-         }
+         if (file.type.includes('image') ) {
+          type = image;
+          }else if (file.type.includes('video')) {
+            type = video;
+          } else {
+            type = File;
+          }
          return (
              <tr key={ind}>
              <td><img src = {type}/></td>
-             <td>{`${file.name}.${file.type}`}</td>
+             <td>{`${file.name}`}</td>
              <td>{`${month[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`}</td>
              <td>{bytesToSize(file.size)}</td>
              <td>
                <div className='buttons'>
-                 <button className='delete-button'>
+                 <button className='delete-button'
+                 onClick={() => {
+                   dispatch(deleteArchivedFile(file.id))
+                 }}
+                 >
                  <HiOutlineTrash className='trash'/>
                  </button>
                  </div>

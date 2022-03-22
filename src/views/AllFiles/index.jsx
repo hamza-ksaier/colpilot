@@ -1,4 +1,3 @@
-import FILES from '../../constants/files';
 import image from '../../assets/icons/Image.svg';
 import video from '../../assets/icons/Video.svg';
 import File from '../../assets/icons/File.svg';
@@ -7,7 +6,12 @@ import starred from '../../assets/icons/Star.svg';
 import archived from '../../assets/icons/Box.svg';
 import allFiles from '../../assets/icons/FileStructure.svg';
 import { BsChevronDown } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import { starredFile, archivedFile } from '../../store/slices/files';
+
 const AllFiles = () => {
+  const dispatch = useDispatch();
+  const {files} = useSelector((state) => state.files);
   return <div className='all-files'>
   <div className="show-case">
         <div className='logo-files'>
@@ -37,37 +41,47 @@ const AllFiles = () => {
           <th>Size</th>
           <th>Actions</th>
         </tr>
-        {FILES.map((file, ind) => {
+        {files.map((file, ind) => {
           const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
           let d = new Date(file.createdAt);
           let type = undefined;
-          if (file.name.startsWith('image')) {
-          type = image;
-          }else if (file.name.startsWith('file')) {
-            type = File;
-          } else {
-            type = video;
-          }
+          if (file.type.includes('image') ) {
+            type = image;
+            }else if (file.type.includes('video')) {
+              type = video;
+            } else {
+              type = File;
+            }
           return (
               <tr key={ind}>
-              <td><img src = {type}/></td>
-              <td>{`${file.name}.${file.type}`}</td>
+              <td><img src = {type}/>
+             <div className='showStAt'>
+              {file.isStarred && <div className={'showSt'}></div>}
+              {file.isArchived && <div className={'showAt'}></div>}
+              </div>
+
+              <div className={(file.isArchived && file.isStarred) ? 'showStAt2' : ''}></div>
+              </td>
+              <td>{`${file.name}`}</td>
               <td>{`${month[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`}</td>
               <td>{bytesToSize(file.size)}</td>
               <td>
                 <div className='buttons'>
-                <button className='starred-button'>
+                <button className={!file.isStarred? 'starred-button': 'noSelected-button'}
+                onClick={()=>{ dispatch(starredFile(file.id))}}
+                >
                   <img src={starred}/>
                   </button>
-                  <button className='archived-button'>
+                  <button className={!file.isArchived? 'archived-button': 'noSelected-button'}
+                  onClick={()=>{dispatch(archivedFile(file.id))}}
+                  >
                   <img src={archived}/>
                   </button>
+                  
                   </div>
                 </td>
             </tr>
           )
-  
-          
         })}
       </table>
       </div>

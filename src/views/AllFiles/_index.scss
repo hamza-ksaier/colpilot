@@ -69,6 +69,29 @@ table {
     cursor: pointer;
      td:first-child {
          width: 3%;
+         padding-bottom: initial;
+         .showStAt {
+             display: flex;
+          
+            .showSt {
+                width: 7px;
+                height: 7px;
+                background-color: $quaternary;
+                border-radius: 50%;
+                position: relative;
+                left: 15px;
+                bottom: 14px;
+             }
+             .showAt {
+                width: 7px;
+                height: 7px;
+                background-color: $quinary;
+                border-radius: 50%;
+                position: relative;
+                left: 14px;
+                top: -14px;
+             }
+         }
      }
   }
   th:last-child {
@@ -101,8 +124,12 @@ table {
             filter: brightness(0) invert(1);
         }        
     }
+   
     .starred-button {
         background-color: $quaternary;
+    }
+    .noSelected-button {
+        background-color: $progress-background;
     }
     .archived-button {
         background-color: $quinary;
