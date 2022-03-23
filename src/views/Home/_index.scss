@@ -45,18 +45,18 @@
           }
           
           .progress-value {
-            animation: load 3s normal forwards;
+            animation: load 2s normal forwards;
             box-shadow: 0 10px 40px -10px #fff;
             border-radius: 100px;
             background: $primary;
             height: 12px;
-            width: 0;
+          
           }
           
           @keyframes load {
-            0% { width: 0; }
-            100% { width: 39%; }
-          }
+            from {
+              width: 0%;
+            }}
           .final-row {
             display: flex;
             gap: 14px;

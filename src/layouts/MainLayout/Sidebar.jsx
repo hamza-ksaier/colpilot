@@ -9,25 +9,29 @@ import { useState, useRef } from 'react';
 import { useSelector , useDispatch} from 'react-redux';
 import { nanoid } from 'nanoid';
 import { addFile } from '../../store/slices/files';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import bytesToSize from '../../utils/bytesToSize';
 
 const Sidebar = () => {
   const [click , setClick] = useState(true);
   const fileRef = useRef();
   const {files} = useSelector((state) => state.files);
   const dispatch = useDispatch();
- 
-
-  const toggleClass = () => {
-    setClick(!click);
-    console.log(click);
+  const sizeFile = (type) => { 
+    return  bytesToSize(files.filter(file=> file.type.includes(type))
+  .map((file) => file.size )
+  .reduce((size,acc) => size + acc , 0));
   }
+
+   // Condition to size 
+   const verifySize = ((bytesToSize(sizeFile('image'))> (5e+7))|| ( bytesToSize(sizeFile('video'))> (5e+9)) || (bytesToSize(sizeFile('application' || 'text' || 'plain')) > (5e+6)));
   // Add File 
-  const handleChange = () => {
-    console.log(fileRef.current.files);
+   const handleChange = () => {
+
+    
+
+
     const newFiles =fileRef.current.files;
     let dataFiles=[];
     for(let i=0;i<newFiles.length;i++) {
@@ -42,39 +46,46 @@ const Sidebar = () => {
       starredAt: null,
       isArchived: false,
       archivedAt: null,
-    })}
-    dispatch(
-      addFile(dataFiles)
-    );
-  };
-  // Error unavaible file
-  const notify = (newFiles) => {
-    if (newFiles.type === 'image/png') {
-        toast.success('Produto removido com sucesso')
-        console.log('TESTE')
-    } else  {
-        toast.error('Erro ao tentar remover produto')
+    })
+    {
+        // Condition to Type 
+    const verifyType = (!type.includes ('image' || 'text' 
+    || 'application' || 'Video' || 'plain'  ) && !type) ;
+  
+    
+    // adding file 
+      if (verifyType){
+        toast.error('This Type is not supported')
+      }else if (verifySize)  {
+        toast.error('Size is not supported')
+      }else {
+          dispatch(
+          addFile(dataFiles))
+      }
     }
-};
+  }};
+     
+ // informations (type, size) of files
+ const typeDoc = ['application', 'plain', 'text']; 
+
+ 
   return (<div className='sidebar'>
+    
     <div className="logo">
-      <img className={(click?"rotate":"rotate")} src={logo} onClick={toggleClass}/>
+      <img src={logo}/>
     </div>
-      <button className='upload' onClick={() => {fileRef.current.click(); }}>
+      <button className='upload' onClick={() => {fileRef.current.click() }}>
         <img className='upload-icon' src={upload}/>
         <div className='upload-text'>Upload</div>
         <input 
          id='byid'
-         onClick={()=>notify()}
+         
          type="file"
          ref={fileRef}
          onChange={handleChange}
          multiple
          hidden
          />
-          <ToastContainer
-            theme = 'dark' 
-          />
         </button>
         <nav>
         <div className='menu'>
@@ -98,4 +109,5 @@ const Sidebar = () => {
         </nav>
     </div>)
 };
+
 export default Sidebar;

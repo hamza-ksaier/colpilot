@@ -15,36 +15,36 @@ const RecentFiles = () => {
     file.isArchived === true)).length;
     return (
 <div className="recentFiles">
-    <div className="files">
-        <div className="title">
-            <b>Recent Files</b>
-        </div>
-        <table>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Date Created</th>
-                <th>Size</th>
-            </tr>
-            {files.slice(0,5).map((file, ind) => { const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-             let d = new Date(file.createdAt);
-             let type = undefined;
-             if (file.type.includes('image') ) {
-               type = image;
-               }else if (file.type.includes('video')) {
-                 type = video;
-               } else {
-                 type = File;
-               }
-                return (
-            <tr key={ind}>
-                <td><img src={type} /></td>
-                <td>{`${file.name}`}</td>
-                <td>{`${month[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`}</td>
-                <td>{bytesToSize(file.size)}</td>
-            </tr>
-            ) })}
-        </table>
+<div className="files">
+    <div className="title">
+        <b>Recent Files</b>
+    </div>
+    <table>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Date Created</th>
+            <th>Size</th>
+        </tr>
+        {files.slice(0,5).map((file, ind) => { const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        let d = new Date(file.createdAt);
+        let type = undefined;
+        if (file.type.includes('image') ) {
+        type = image;
+        }else if (file.type.includes('video')) {
+            type = video;
+        } else {
+            type = File;
+        }
+            return (
+        <tr key={ind}>
+            <td><img src={type} /></td>
+            <td>{`${file.name}`}</td>
+            <td>{`${month[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`}</td>
+            <td>{bytesToSize(file.size)}</td>
+        </tr>
+        ) })}
+    </table>
       
     </div>
     <div className="information-files">
