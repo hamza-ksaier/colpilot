@@ -28,7 +28,7 @@ return (
     </div>
     <div className='final-row'>
         <div className="percentage"  >
-            {((sizeDoc /(5e+6)*100)).toFixed(2)}%
+        {((sizeDoc /(5e+6)*100)).toFixed(2)}%
         </div>
         <div className='size'>
              {bytesToSize(sizeDoc)} of 5mb Used
@@ -73,11 +73,11 @@ return (
 </div>
 <div className='last-part'>
 <div class="progress">
-    <div class="progress-value-videos" style={{ 'width':  (sizeFile('video')/(5e+9)*100).toFixed(2)+ '%'}}></div>
+    <div class="progress-value-videos" style={{ 'width':  (sizeFile('video')/(5368709120)*100).toFixed(2)+ '%'}}></div>
     </div>
     <div className='final-row'>
         <div className="percentage">
-        {(sizeFile('video')/(5e+9)*100).toFixed(2)}%
+        {(sizeFile('video')/(5368709120)*100).toFixed(2)}%
         </div>
         <div className='size'>
             {bytesToSize(sizeFile('video'))} of 50gb Used
