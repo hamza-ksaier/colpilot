@@ -32,14 +32,14 @@ const Sidebar = () => {
       
      const  verifySize = (type) => {
        if (type='image'){
-         return (size+ sizeFile(type)> (5e+7))
-       }else if (type= 'video'){
-         return  console.log((size+ sizeFile(type) ))
+        return(size+ (sizeFile(type))> (5e+7))
+
+       }else if (type = 'video'){
+         return  (size+ sizeFile(type) > (5e+9))
        }else {
          return (size+ sizeFile(type) > (5e+6))
        }
      }
-     verifySize(type);
      dataFiles.push({
       id:nanoid(10),
       name,
@@ -52,22 +52,22 @@ const Sidebar = () => {
       archivedAt: null,
     })
     {
+    
         // Condition to Type 
     const verifyType = (!type.includes ('image' || 'text' 
     || 'application' || 'Video' || 'plain'  ) && !type) ;
     // adding file 
-     
         if (verifyType){
         toast.error('This Type is not supported')
       }else if (verifySize(type))    {
-        toast.error('Size is not supported')
+        toast.error('Size is not supported');
       } else {
           dispatch(
           addFile(dataFiles)) 
       }
     }
   }};
-  
+
  // informations (type, size) of files
  const typeDoc = ['application', 'plain', 'text']; 
   return (<div className='sidebar'>

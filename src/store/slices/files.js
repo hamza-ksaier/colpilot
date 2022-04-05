@@ -24,7 +24,6 @@ export const filesSlice = createSlice({
     
       deleteArchivedFile: (state, action) => {
         const File = state.files.find(file => file.id === action.payload)
-        
         File.isArchived = false;
           return state;
       },
