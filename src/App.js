@@ -6,20 +6,12 @@ const numRows = 20;
 const numCols = 20;
 
 const App = () => {
-
-
-
   //Board (Grid)
   const [grid, setGrid] = useState(() => Array.from(Array(numCols), () =>
-
     new Array(numRows).fill([0, 'clear'])));
   const [s, setS] = useState(0);
-
-  const tetro = TETROMINOS.J.shape;
+  const tetro = TETROMINOS.I.shape;
   // End of conditions 
-
-  let adjecent = true;
-  let notFirst = false;
 
   const clickMe = (x, y) => {
     setS((s) => {
@@ -30,17 +22,7 @@ const App = () => {
       return produce(g, gridCopy => {
 
 
-          for (let i = 1; i < numRows - 1; i++) {
-            for (let j = 1; j < numCols - 1; j++) {
-              if ((grid[i][j][1] !== grid[i][j + 1][1]) && ((grid[i][j][0] === 11 && grid[i][j + 1][0] === 11)
-                || (grid[i][j][0] === 1 && grid[i][j + 1][0] === 1) || (grid[i][j][0] === 1 && grid[i][j + 1][0] === 11) || (grid[i][j][0] === 11 && grid[i - 1][j][0] === 11))
-              ) {
-               return
-              };
-            }
-          }
-        
-
+      
         // Condition of adjecent
           // loop for tetrominos 
           for (let i = 0; i < tetro.length; i++) {
@@ -49,46 +31,59 @@ const App = () => {
                 gridCopy[i + x][j + y][0] = tetro[i][j]
                 gridCopy[i + x][j + y][1] = `shape ${s}`
               }
-
             }
-          
-       
         }
-
-
-
-
-
+        // Position 1
+        if ((s=== 0) && (gridCopy[0][0][0] === 0) ){
+            console.log("errooor position 1")
+          }
+    
 
       })
+      
     })
   }
+  // Prohibition touching shapes  with same color 
+  for (let i = 0; i < numRows-1  ; i++) {
+    for (let j = 0; j < numCols-1 ; j++) {
+      if ((grid[i][j][1] !== grid[i][j + 1][1]) 
+       && ((grid[i][j][0] === 11 && grid[i][j + 1][0] === 11) 
+            || (grid[i][j][0] === 1 && grid[i][j + 1][0] === 1) 
+            || (grid[i][j][0] === 1 && grid[i][j + 1][0] === 11) 
+            || (grid[i][j][0] === 11 && grid[i + 1][j][0] === 11)          
+          )
+      ) {
+       console.log("error ")
+      
+      };
+    }
+  } 
+  // prohibition touching column 20
+         for (let i=0; i< numRows -1 ; i++)
+            if (grid[i][19][0] === 11 && grid[i+1][19][0] === 11){
+              console.log("game over")
+            }            
 
+        // Game Rule 
+        let test=false
+        if (s !== 1) {
+          for (let i = 1; i < numRows-1  ; i++) {
+            for (let j = 1; j < numCols-1 ; j++) {
+            if (((grid[i][j][1] !== grid[i][j + 1][1]) && grid[i][j+1] !=="clear" && grid[i][j] !== "clear")
+            && ((grid[i][j][0] === 11 && grid[i-1][j-1][0] !== 11)))
+                 {
+                    console.log("position is wrong")
+                    console.log(grid[i][j][0] ,grid[i-1][j+1][0], i ,j )
+                    test=true
+                    break;
+                  }
+            }
+        if(test) break;
+      }
+    }
+ console.log(grid)
 
-
-  //   const ruleGame = (x,y) => {
-  //     setGrid(g => {
-  //       return produce(g, gridCopy => {
-  //         for (let i = 0; i < tetro.length;  i++) {
-  //           for (let j = 0; j < tetro[i].length; j++) {
-  //         // if(gridCopy[x][y][0] === gridCopy[x][y+1][0]){
-  //         //   console.log(gridCopy[x][y][0]  , gridCopy[x][y+1][0])
-  //         //   console.log(x, y, x , y+1 )
-  //         //   console.log("errur")
-  //         // }
-  //         // }
-  //       }
-  //     }
-  //       })
-  //   })
-  // }
-
-  // if(( grid[i][j][1] !== grid[i][j+1][1]) && ((grid[i][j][0] === 11 && grid[i-1][j][0] === 11) )){
-  //   console.log("error")
-  // }
-
-
-
+     
   return (
     <>
       <div className="App"
