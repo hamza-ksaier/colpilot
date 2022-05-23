@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import produce from 'immer';
 // import './App.css';
 import { TETROMINOS } from './tetrominos';
+import Shapes from './components/shapes';
 const numRows = 20;
 const numCols = 20;
 
@@ -10,79 +11,185 @@ const App = () => {
   const [grid, setGrid] = useState(() => Array.from(Array(numCols), () =>
     new Array(numRows).fill([0, 'clear'])));
   const [s, setS] = useState(0);
-  const tetro = TETROMINOS.I.shape;
-  // End of conditions 
-
+  const tetro = TETROMINOS.shape;
+  
   const clickMe = (x, y) => {
-    setS((s) => {
-      s++
-      return s;
-    })
+   
     setGrid(g => {
-      return produce(g, gridCopy => {
-
-
-      
+      return produce(g, gridCopy => {      
         // Condition of adjecent
-          // loop for tetrominos 
-          for (let i = 0; i < tetro.length; i++) {
-            for (let j = 0; j < tetro[i].length; j++) {
-              if ((tetro[i][j] !== 0)) {
-                gridCopy[i + x][j + y][0] = tetro[i][j]
-                gridCopy[i + x][j + y][1] = `shape ${s}`
-              }
+        
+        let shape0 = (s===0);
+        // authentication case out the board
+        let testBoard = true;
+        for (let i = 0; i < tetro.length; i++) {
+          for (let j = 0; j < tetro[i].length; j++) {
+            if ((i+x > 19 || j+y > 19 )&&(tetro[i][j] !== 0)) {
+              testBoard = false;
+              break;
             }
-        }
-        // Position 1
-        if ((s=== 0) && (gridCopy[0][0][0] === 0) ){
-            console.log("errooor position 1")
           }
-    
+      }
 
+              // authentication of all clear cases
+              let testClear = true;
+              if (testBoard) {
+                for (let i = 0; i < tetro.length; i++) {
+                  for (let j = 0; j < tetro[i].length; j++) {
+                    if( (j+y > 19)&&(tetro[i][j] !== 0)&&(gridCopy[i+x][j+(y-j)][1] !== "clear")) {
+                    testClear = false;
+                      break;
+                    } else if  ((j+y <20)&&(gridCopy[i+x][j+y][1] !== "clear")&&(tetro[i][j] !== 0)) {
+                        testClear = false;
+                        break;
+                    }
+                  }
+              }
+              }
+                  //  //  Position 1
+                   let testPosition1 = true;
+                      if ((shape0)&& ((x !==0 || y!==0) || ( (x ===0 && y ===0) && (tetro[0][0] === 0)))) {
+                        testPosition1 = false;
+                      }
+                      
+
+                      // Condition Corner 
+                      let testCorner = true;
+                      let testNeighbors = true;
+                      if (!shape0){
+                      // Condition Top Corner 1
+                        let testTopCorner1 = false;
+                        for (let i = 0; i < tetro.length; i++) {
+                          for (let j = 0; j < tetro[i].length; j++) {
+                            if ((tetro[i][j] === 11)&& (
+                              (grid[(x+i)-1][(y+j)+1][0]=== 11))){
+                              testTopCorner1 = true;
+                              break;
+                            }
+                          }
+                          }
+                          // Condition Top Corner 2
+                          let testTopCorner2 = false;
+                         
+                          for (let i = 0; i < tetro.length; i++) {
+                            for (let j = 0; j < tetro[i].length; j++) {
+                              if ((tetro[i][j] === 11)&& ((grid[(x+i)-1][(y+j)-1][0]=== 11))){
+                                testTopCorner2 = true;
+                                break;
+                              }
+                            }
+                          }
+
+                            //   Condition bottom corner 1
+                              let testBottomCorner1 = false;
+                
+                              for (let i = 0; i < tetro.length; i++) {
+                                for (let j = 0; j < tetro[i].length; j++) {
+                                  if ((tetro[i][j] === 11)&& ((grid[(x+i)+1][(y+j)-1][0]=== 11))){
+                                    testBottomCorner1 = true;
+                                    break;
+                                }
+                                }
+                              }
+
+                                  //   Condition bottom corner 2
+                                  let testBottomCorner2 = false;
+                
+                                  for (let i = 0; i < tetro.length; i++) {
+                                    for (let j = 0; j < tetro[i].length; j++) {
+                                      if ((tetro[i][j] === 11)&& ((grid[(x+i)+1][(y+j)+1][0]=== 11))){
+                                        testBottomCorner2 = true;
+                                        break;
+                                    }
+                                    }
+                                  }
+
+                             // result of corner conditions 
+                           testCorner = testTopCorner1 || testTopCorner2 || testBottomCorner1 || testBottomCorner2
+
+
+                           // Condition of neighbor'shapes 
+
+                             //   Condition test neighbor 1
+                             // left Neighbor 
+                             let testNeighbor1 = true;
+                              
+                
+                             for (let i = 0; i < tetro.length; i++) {
+                               for (let j = 0; j < tetro[i].length; j++) {
+                                 if ((tetro[i][j] !== 0 ) && 
+                                 (grid[(x+i)][(y+j)-1][0] !== 0)){
+                                   testNeighbor1 = false;
+                                   break;
+                               }
+                               }
+                             }
+                               //   Condition test neighbor 2
+                              //  right neighbor
+                               let testNeighbor2 = true;
+                
+                               for (let i = 0; i < tetro.length; i++) {
+                                 for (let j = 0; j < tetro[i].length; j++) {
+                                  if ((tetro[i][j] !== 0 ) && 
+                                 (grid[(x+i)][(y+j)+1][0] !== 0)){
+                                   testNeighbor2 = false;
+                                   break;
+                               }
+                                 }
+                               }
+                                  //   Condition test neighbor 3
+                                  // Top Neighbor
+                                  let testNeighbor3 = true;
+                
+                                  for (let i = 0; i < tetro.length; i++) {
+                                    for (let j = 0; j < tetro[i].length; j++) {
+                                      if ((tetro[i][j] !== 0 ) && 
+                                 (grid[(x+i)-1][(y+j)][0] !== 0)){
+                                   testNeighbor3 = false;
+                                   break;
+                               }
+                                    }
+                                  }
+                                   //   Condition test neighbor 4
+                                  // Bottom Neighbor
+                                  let testNeighbor4 = true;
+                
+                                  for (let i = 0; i < tetro.length; i++) {
+                                    for (let j = 0; j < tetro[i].length; j++) {
+                                      if ((tetro[i][j] !== 0 ) && 
+                                 (grid[(x+i)+1][(y+j)][0] !== 0)){
+                                   testNeighbor4 = false;
+                                   break;
+                               }
+                                    }
+                                  }
+                                 
+                             // Result of neighbor'conditions
+                             
+                             testNeighbors =
+                              testNeighbor1 && testNeighbor2 && testNeighbor3 && testNeighbor4
+                    }
+                    
+          // build shapesq
+          if ( (testBoard)&& (testClear) && (testPosition1)  && (testCorner) && (testNeighbors)) {
+            for (let i = 0; i < tetro.length; i++) {
+              for (let j = 0; j < tetro[i].length; j++) {
+                if ((tetro[i][j] !== 0)) {
+                  gridCopy[i + x][j + y][0] = tetro[i][j]
+                  gridCopy[i + x][j + y][1] = `shape ${s}`
+                  
+                }
+              }
+          }
+          setS((s) => {
+            s++
+            return s;
+          })
+          }  
       })
       
     })
   }
-  // Prohibition touching shapes  with same color 
-  for (let i = 0; i < numRows-1  ; i++) {
-    for (let j = 0; j < numCols-1 ; j++) {
-      if ((grid[i][j][1] !== grid[i][j + 1][1]) 
-       && ((grid[i][j][0] === 11 && grid[i][j + 1][0] === 11) 
-            || (grid[i][j][0] === 1 && grid[i][j + 1][0] === 1) 
-            || (grid[i][j][0] === 1 && grid[i][j + 1][0] === 11) 
-            || (grid[i][j][0] === 11 && grid[i + 1][j][0] === 11)          
-          )
-      ) {
-       console.log("error ")
-      
-      };
-    }
-  } 
-  // prohibition touching column 20
-         for (let i=0; i< numRows -1 ; i++)
-            if (grid[i][19][0] === 11 && grid[i+1][19][0] === 11){
-              console.log("game over")
-            }            
-
-        // Game Rule 
-        let test=false
-        if (s !== 1) {
-          for (let i = 1; i < numRows-1  ; i++) {
-            for (let j = 1; j < numCols-1 ; j++) {
-            if (((grid[i][j][1] !== grid[i][j + 1][1]) && grid[i][j+1] !=="clear" && grid[i][j] !== "clear")
-            && ((grid[i][j][0] === 11 && grid[i-1][j-1][0] !== 11)))
-                 {
-                    console.log("position is wrong")
-                    console.log(grid[i][j][0] ,grid[i-1][j+1][0], i ,j )
-                    test=true
-                    break;
-                  }
-            }
-        if(test) break;
-      }
-    }
- console.log(grid)
-
      
   return (
     <>
@@ -105,6 +212,8 @@ const App = () => {
           }}> </div>))}
 
       </div>
+      te
+      <Shapes/>
     </>
 
   );
