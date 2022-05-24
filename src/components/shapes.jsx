@@ -1,54 +1,48 @@
-import { TETROMINOS } from '../tetrominos';
-const player1 = [];
-const tableShape =[];
-for (let i=0; i<5; i++){
-    tableShape.push([])
-    for (let j=0; j<5; j++) {
-        tableShape[i].push(["clear"])
-    }
+import { react, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { placeShape } from '../store/slices/tetrominos';
+import './styles/shapes.css';
+
+
+
+export  function clickedShape(id) {
+    return id;
 }
-let tetro = TETROMINOS.map(tetro => tetro.shape);
-tetro.map (tet => {
-    console.log(tet)
-    for (let i = 0; i < tet.length; i++) {
-        for (let j = 0; j < tet[i].length; j++) {
-        if (tet[i][j] !== 0){
-            tableShape[i][j][0]= "colored"
-        }
-        }
-    }
-    player1.push("zsgzse")
-})
- 
-    
-    console.log(player1)
+
+
+export const Shapes = ({ childToParent }) => {
+
+    const dispatch = useDispatch();
+    const { TETROMINOS } = useSelector((state) => state.tetrominos);
 
     
-
-const Shapes = () => {
-
+    let tetros = TETROMINOS.filter(tetro => tetro.isPlaced === false )
+    let tetro = tetros.map(tet => tet.shape)
+    console.log(tetro);
+  
     return (
         <>
             <div className="player1" >
                 <div className="title">
-
+                    <u>Player 1</u>
                 </div>
-                <div className="tetrominos"
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: `repeat(5, 30px)`,
-                        justifyContent: "center",
-                        marginTop: "100px"
-                    }}
-                >
-                    {tableShape.map((rows, i) => rows?.map((col, k) => <div
-                        key={`${i}-${k}`}
-                        style={{
-                            width: 30, height: 30,
-                            backgroundColor: tableShape[i][k][0] === "clear" ? "white" : "blue",
-                            border: tableShape[i][k][0] === "clear" ? undefined : "solid 2px black"
+                <div className="tetrominos">
+                    {tetro.map((shape, num) => {
 
-                        }}> </div>))}
+                            const returnn = shape.map((rows, i) => {
+                                return rows.map((col, j) => {
+                                    if (col !== 0 ) {
+                                        return <div className='case'></div>
+                                    }
+                                    return <div></div>
+                                })
+                            });
+                        return <div id={num} onClick={() => dispatch(placeShape(num))} style={{
+                                display: 'grid', gridTemplateRows: `repeat(${shape.length}, 30px)`, gridTemplateColumns: `repeat(${5}, 30px)`
+
+                            }}>{returnn}</div>
+                                                   
+                    })}
                 </div>
 
             </div>
