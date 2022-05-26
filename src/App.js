@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import produce from 'immer';
 // import './App.css';
-import { TETROMINOS } from './constants/tetrominos';
 import Shapes from './components/shapes';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteShape } from './store/slices/tetrominos';
 const numRows = 20;
 const numCols = 20;
 
@@ -11,15 +12,14 @@ const App = () => {
   const [grid, setGrid] = useState(() => Array.from(Array(numCols), () =>
     new Array(numRows).fill([0, 'clear'])));
   const [s, setS] = useState(0);
-  const [data, setData] = useState(21);
+  const dispatch = useDispatch();
+  const {id}=useSelector((state)=>state.tetrominos);
+  const { tetrominos } = useSelector((state) => state.tetrominos);
 
-  const childToParent = (id) => {
-    setData(id);
-  }
-  const TETROMINOS2 = TETROMINOS.filter(tetro => tetro.id !== data);
+ 
+  const tetro = tetrominos[id].shape;
 
 
-  const tetro = TETROMINOS[data].shape;
   const clickMe = (x, y) => {
     setGrid(g => {
       return produce(g, gridCopy => {
@@ -165,7 +165,7 @@ const App = () => {
             testNeighbor1 && testNeighbor2 && testNeighbor3 && testNeighbor4
         }
 
-        // build shapesq
+        // build shapes
         if ((testBoard) && (testClear) && (testPosition1) && (testCorner) && (testNeighbors)) {
           for (let i = 0; i < tetro.length; i++) {
             for (let j = 0; j < tetro[i].length; j++) {
@@ -180,6 +180,9 @@ const App = () => {
             s++
             return s;
           })
+          document.getElementById(id).classList.add('hidden')
+          dispatch(deleteShape()) 
+          
         }
       })
 
@@ -199,7 +202,7 @@ const App = () => {
         {/* Dealing with grid  */}
         {grid.map((rows, i) => rows?.map((col, k) => <div
           key={`${i}-${k}`}
-          onClick={() => { clickMe(i, k); }}
+          onClick={() => { clickMe(i, k);}}
           style={{
             width: 30, height: 30,
             backgroundColor: grid[i][k][0] === 0 ? "grey" : "cyan",
@@ -208,7 +211,7 @@ const App = () => {
 
       </div>
 
-      <Shapes childToParent={childToParent}/>
+      <Shapes/>
     </>
 
   );

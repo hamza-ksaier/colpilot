@@ -24,3 +24,6 @@
     font-size: 22px;
     color: floralwhite;
 }
+.hidden{
+    display:none !important;
+}

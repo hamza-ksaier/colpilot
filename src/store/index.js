@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tetrominos from "./slices/tetrominos";
+import tetrominosReducer from "./slices/tetrominos";
+
 
 export const store = configureStore({
     reducer: {
