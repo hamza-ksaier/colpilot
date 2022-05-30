@@ -9,41 +9,37 @@ export function clickedShape(id) {
 }
 
 
-export const Shapes = ({ childToParent }) => {
+export const Shapes = () => {
 
     const dispatch = useDispatch();
     const { tetrominos } = useSelector((state) => state.tetrominos);
-    let matrix = [
-        [0,0,0,0,0],
-        [0,11,0,0,0],
-        [11,11,11,0,0]
-    ]; 
+
+
+    let tetros = tetrominos?.filter(tetro => tetro.id < 22)
+    let tetros2 = tetrominos?.filter(tetro => tetro.id > 21 && tetro.id<43)
+    let tetros3 = tetrominos?.filter(tetro => tetro.id > 42 && tetro.id <64)
+    let tetros4 = tetrominos?.filter(tetro => tetro.id > 63)
 
 
 
-    let tetros = tetrominos?.filter(tetro => tetro)
 
     let tetro = tetros?.map(tet => tet.shape)
-    const clickHandler = ( num) => {
+    let tetro2 = tetros2?.map(tet => tet.shape)
+    let tetro3 = tetros3?.map(tet => tet.shape)
+    let tetro4 = tetros4?.map(tet => tet.shape)
+
+
+    const clickHandler = (num) => {
         dispatch(placeShape({ id: num }));
-       
-    }  
+    }
 
     const keyPress = (e) => {
-      if (e.key === 'r' ){
-          dispatch(transpose())
-      }else  if (e.key === 'f'){
-          dispatch(flip())
-      }
+        if (e.key === 'r') {
+            dispatch(transpose())
+        } else if (e.key === 'f') {
+            dispatch(flip())
+        }
     }
-    let matrice = [
-        [0,0,11,11,11],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0]
-    ]
-
 
     return (
         <>
@@ -63,10 +59,38 @@ export const Shapes = ({ childToParent }) => {
                             })
                         });
                         return <div id={num}
-                         onClick={() => clickHandler(num)} 
-                        onKeyDown={keyPress}
-                        tabIndex="0"
-                        // onContextMenu={(e)=>contextMenu(e)}
+                            onClick={() => clickHandler(num)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
+                            style={{
+                                display: 'grid',
+                                gridTemplateRows: `repeat(${shape.length}, 30px)`,
+                                gridTemplateColumns: `repeat(${5}, 30px)`
+                            }}>{returnn}</div>
+                    })}
+                </div>
+            </div>
+            {/* // player2 */}
+            <div className="player2" >
+                <div className="title">
+                    <u>Player 2</u>
+                </div>
+
+                <div className="tetrominos">
+
+                    {tetro2?.map((shape, num) => {
+                        const returnn = shape?.map((rows, i) => {
+                            return rows?.map((col, j) => {
+                                if (col !== 0) {
+                                    return <div className='case2'></div>
+                                }
+                                return <div></div>
+                            })
+                        });
+                        return <div id={num + 22}
+                            onClick={() => clickHandler(num + 22)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
                             style={{
                                 display: 'grid',
                                 gridTemplateRows: `repeat(${shape.length}, 30px)`,
@@ -78,6 +102,63 @@ export const Shapes = ({ childToParent }) => {
 
                 </div>
 
+            </div>
+            {/* player 3 */}
+            <div className="player3" >
+                <div className="title">
+                    <u>Player 3</u>
+                </div>
+
+                <div className="tetrominos">
+                    {tetro3?.map((shape, num) => {
+                        const returnn = shape?.map((rows, i) => {
+                            return rows?.map((col, j) => {
+                                if (col !== 0) {
+                                    return <div className='case3'></div>
+                                }
+                                return <div></div>
+                            })
+                        });
+                        return <div id={num + 43}
+                            onClick={() => clickHandler(num + 43)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
+                            style={{
+                                display: 'grid',
+                                gridTemplateRows: `repeat(${shape.length}, 30px)`,
+                                gridTemplateColumns: `repeat(${5}, 30px)`
+                            }}>{returnn}</div>
+                    })}
+                </div>
+            </div>
+            {/* player 4 */}
+            <div className="player4" >
+                <div className="title">
+                    <u>Player 4</u>
+                </div>
+
+                <div className="tetrominos">
+
+                    {tetro4?.map((shape, num) => {
+                        const returnn = shape?.map((rows, i) => {
+                            return rows?.map((col, j) => {
+                                if (col !== 0) {
+                                    return <div className='case4'></div>
+                                }
+                                return <div></div>
+                            })
+                        });
+                        return <div id={num + 64}
+                            onClick={() => clickHandler(num + 64)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
+                            style={{
+                                display: 'grid',
+                                gridTemplateRows: `repeat(${shape.length}, 30px)`,
+                                gridTemplateColumns: `repeat(${5}, 30px)`
+                            }}>{returnn}</div>
+                    })}
+                </div>
             </div>
         </>
     );
