@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import produce from 'immer';
+import produce, { current } from 'immer';
 // import './App.css';
 import Shapes from './components/shapes';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteShape } from './store/slices/tetrominos';
+import { cleanMatrix } from './utils/cleanMatrix';
+import Cols from './utils/numberCols'
+import Rows from './utils/numberRows';
 const numRows = 20;
 const numCols = 20;
+let a = 0;
+let b = 1;
+let c = 2;
+let d = 3;
 
 const App = () => {
   //Board (Grid)
@@ -17,8 +24,8 @@ const App = () => {
   const { tetrominos } = useSelector((state) => state.tetrominos);
 
 
-  const tetro = tetrominos[id].shape;
-
+  const tetro = cleanMatrix(tetrominos[id].shape);
+  console.log(tetro)
   let jokerCenter = 11;
   let jokerCorner = 11;
 
@@ -35,9 +42,11 @@ const App = () => {
     jokerCorner = 44;
     jokerCenter = 4;
   }
-
-
+  let currentUser = false;
+console.log(grid
+)
   const clickMe = (x, y) => {
+ 
     setGrid(g => {
       return produce(g, gridCopy => {
         // Condition of adjecent
@@ -76,28 +85,42 @@ const App = () => {
           }
         }
    
-          let testPosition0 =true;
-          console.log(s);
+          let testPosition0 =false;
         const Position = () => {
           for (let i = 0; i < tetro.length; i++) {
             for (let j = 0; j < tetro[i].length; j++) {
-              if ((s===0)&&((x!==0 || y!==0) || (x===0 && y===0 && tetro[0][0]===0))
+              if ((s===0  && x===0 && y===0 && id < 21 && tetro[0][0]===11)
               ) {
-              return testPosition0 = false;
+              return testPosition0 = true;
               }
-              // else if ((s === 2) || ((id < 21 && id > 44) && ((x !== 0) || (tetro[0][j] !== 0) && y + j !== 19))) {
-              //   return testPosition0 = false;
-              // }        
+              else if ((s === 1) &&   (id >21 && id < 44) && (x === 0) && (tetro[0][Cols(tetro)-1]===22 && y+Cols(tetro)-1 ===19)   ) {
+                return testPosition0 = true;
+              } else if ((s === 2) && (id > 43 && id < 64) && (y === 0) && (tetro[Rows(tetro) - 1][0] === 33 && x + Rows(tetro) - 1 === 19)) {
+                return testPosition0 = true;
+              }
+              else if ((s === 3) && (id > 63) && (tetro[Rows(tetro) - 1][Cols(tetro)-1] === 44 && x + Rows(tetro) - 1 === 19 && y + Cols(tetro) - 1 === 19)) {
+                return testPosition0 = true;
+              }
             }}
           return testPosition0;
           }
           Position();
-        console.log(testPosition0);
-
+        
+     
         // Condition Corner 
         let testCorner = true;
         let testNeighbors = true;
-        if (s > 3) {
+        console.log(a , b ,c ,d , s)
+
+            if (s<4) {
+              currentUser = true;
+            }
+        console.log(currentUser)
+
+        if (s>3) {
+          testPosition0 = true
+
+     
           // function of corner shapes
           const corner = (X, Y) => {
             for (let i = 0; i < tetro.length; i++) {
@@ -142,22 +165,39 @@ const App = () => {
         }
 
         // build shapes
-        if ((testBoard) && (testClear)   && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0) ) {
-          for (let i = 0; i < tetro.length; i++) {
-            for (let j = 0; j < tetro[i].length; j++) {
-              if ((tetro[i][j] !== 0)) {
-                gridCopy[i + x][j + y][0] = tetro[i][j]
-                gridCopy[i + x][j + y][1] = `shape ${s}`
+        if ((testBoard) &&(testClear)   && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0) ) {
+          const checkUser = () => {
+            if ((s - a === 4) && (id < 21)) {
+              currentUser = true;
+              a = s;
+            } else if ((s - b === 4) && (id > 21 && id < 44)) {
+              currentUser = true;
+              b = s;
+            } else if ((s - c === 4) && (id > 43 && id < 64)) {
+              currentUser = true;
+              c = s;
+            } else if ((s - d === 4) && (id > 63)) {
+              d= s;
+              currentUser = true;
+            }
+            return currentUser;
+          }
+          checkUser(); 
+          if (currentUser) {
+            for (let i = 0; i < tetro.length; i++) {
+              for (let j = 0; j < tetro[i].length; j++) {
+                if ((tetro[i][j] !== 0)) {
+                  gridCopy[i + x][j + y][0] = tetro[i][j]
+                  gridCopy[i + x][j + y][1] = `shape ${s}`
 
+                }
               }
             }
+            setS(s + 1);
+            document.getElementById(id).classList.add('hidden')
+            dispatch(deleteShape())
           }
-          setS((s) => {
-            s++
-            return s;
-          })
-          document.getElementById(id).classList.add('hidden')
-          dispatch(deleteShape())
+         
 
         }
       })
@@ -179,6 +219,7 @@ const App = () => {
     }
 
   }
+ 
   return (
     <>
       <div className='App'>

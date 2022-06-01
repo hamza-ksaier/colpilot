@@ -54,7 +54,6 @@ export const Shapes = () => {
                 <div className="tetrominos">
 
                     {tetro?.map((shape, num) => {
-                        console.log(cleanMatrix(shape))
                         const returnn = cleanMatrix(shape)?.map((rows, i) => {
                             return rows?.map((col, j) => {
                                 if (col !== 0) {
@@ -78,6 +77,95 @@ export const Shapes = () => {
                     })}
                 </div>
             </div>
+            <div className="player2" >
+                <div className="title">
+                    <u>Player 2</u>
+                </div>
+                <div className="tetrominos">
+
+                    {tetro2?.map((shape, num) => {
+                        const returnn = cleanMatrix(shape)?.map((rows, i) => {
+                            return rows?.map((col, j) => {
+                                if (col !== 0) {
+                                    return <div key={j} className='case2'></div>
+                                }
+                                return <div key={j}></div>
+                            })
+                        });
+
+                        return <div id={num + 22}
+                            key={num}
+                            onClick={() => clickHandler(num + 22)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
+                            style={{
+                                display: 'grid',
+                                gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                gridTemplateColumns: `repeat(${numCols(shape)
+                                    }, 30px)`
+                            }}>{returnn}</div>
+                    })}
+                </div>
+            </div>
+              <div className="player3" >
+                <div className="title">
+                    <u>Player 3</u>
+                </div>
+                <div className="tetrominos">
+
+                    {tetro3?.map((shape, num) => {
+                        const returnn = cleanMatrix(shape)?.map((rows, i) => {
+                            return rows?.map((col, j) => {
+                                if (col !== 0) {
+                                    return <div key={j} className='case3'></div>
+                                }
+                                return <div key={j}></div>
+                            })
+                        });
+
+                        return <div id={num + 43}
+                            key={num}
+                            onClick={() => clickHandler(num + 43)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
+                            style={{
+                                display: 'grid',
+                                gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                gridTemplateColumns: `repeat(${numCols(shape)
+                                    }, 30px)`
+                            }}>{returnn}</div>
+                    })}
+                </div>
+            </div> 
+            <div className="player4" >
+                <div className="title">
+                    <u>Player 4</u>
+                </div>
+                <div className="tetrominos">
+
+                    {tetro4?.map((shape, num) => {
+                        const returnn = cleanMatrix(shape)?.map((rows, i) => {
+                            return rows?.map((col, j) => {
+                                if (col !== 0) {
+                                    return <div key={j} className='case4'></div>
+                                }
+                                return <div key={j}></div>
+                            })
+                        });
+                        return <div id={num+64}
+                            key={num}
+                            onClick={() => clickHandler(num+64)}
+                            onKeyDown={keyPress}
+                            tabIndex="0"
+                            style={{
+                                display: 'grid',
+                                gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                gridTemplateColumns: `repeat(${numCols(shape)
+                                    }, 30px)`
+                            }}>{returnn}</div>
+                    })}
+                </div>
+            </div> 
 
         </>
     );
