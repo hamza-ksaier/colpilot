@@ -11,8 +11,6 @@ import numCols from '../utils/numberCols';
 export function clickedShape(id) {
     return id;
 }
-
-
 export const Shapes = () => {
 
     const dispatch = useDispatch();

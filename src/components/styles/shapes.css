@@ -1,4 +1,8 @@
-
+body {
+    background: url('../../assets/images/background.webp');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
 .tetrominos {
     display: flex;
     justify-content: center;

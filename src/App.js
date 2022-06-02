@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import produce, { current } from 'immer';
-// import './App.css';
 import Shapes from './components/shapes';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteShape } from './store/slices/tetrominos';
