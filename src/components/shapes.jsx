@@ -105,7 +105,9 @@ export const Shapes = () => {
                     })}
                 </div>
             </div>
-              <div className="player3" >
+            <div className="player3-4">
+
+            <div className="player3" >
                 <div className="title">
                     <u>Player 3</u>
                 </div>
@@ -164,6 +166,13 @@ export const Shapes = () => {
                     })}
                 </div>
             </div> 
+
+
+
+
+
+            </div>
+             
 
         </>
     );
