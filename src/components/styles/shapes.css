@@ -2,6 +2,8 @@ body {
     background: url('../../assets/images/background.webp');
     background-repeat: no-repeat;
     background-size: cover;
+    margin: 0;
+    padding: 0;
 }
 .tetrominos {
     display: flex;
@@ -65,7 +67,7 @@ body {
 .player3-4 {
     display: flex;
     justify-content:space-between;
-    margin: -335px 90px 50px;
+    margin: -335px 90px 0  90px ;
 }
 .blokus-title{
     font-size: 40px;

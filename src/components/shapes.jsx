@@ -42,12 +42,12 @@ export const Shapes = () => {
             dispatch(flip())
         }
     }
-
     return (
         <>
             <div className="player1" >
                 <div className="title">
                     <u>Player 1</u>
+                   
                 </div>
                 <div className="tetrominos">
 
@@ -60,7 +60,6 @@ export const Shapes = () => {
                                 return <div key={j}></div>
                             })
                         });
-
                         return <div id={num}
                             key={num}
                             onClick={() => clickHandler(num)}
