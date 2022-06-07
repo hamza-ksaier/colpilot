@@ -13,8 +13,8 @@ let a = 0;
 let b = 1;
 let c = 2;
 let d = 3;
-
 const Game = () => {
+  
   //Board (Grid)
   const [grid, setGrid] = useState(() => Array.from(Array(numCols), () =>
     new Array(numRows).fill([0, 'clear'])));
@@ -47,9 +47,12 @@ const Game = () => {
     color = "green"
   }
   let currentUser = false;
-
+  let blueTurn = 1;
+  let yellowTurn = 0;
+  let redTurn = 0;
+  let greenTurn = 0;
   const clickMe = (x, y) => {
-
+   
     setGrid(g => {
       return produce(g, gridCopy => {
         // Condition of adjecent
@@ -87,21 +90,30 @@ const Game = () => {
             }
           }
         }
-
+        
         let testPosition0 = false;
         const Position = () => {
           for (let i = 0; i < tetro.length; i++) {
             for (let j = 0; j < tetro[i].length; j++) {
               if ((s === 0 && x === 0 && y === 0 && id < 21 && tetro[0][0] === 11)
               ) {
+                blueTurn = 0;
+                yellowTurn = 1;
                 return testPosition0 = true;
               }
               else if ((s === 1) && (id > 21 && id < 44) && (x === 0) && (tetro[0][Cols(tetro) - 1] === 22 && y + Cols(tetro) - 1 === 19)) {
+                yellowTurn = 0
+                redTurn = 1
                 return testPosition0 = true;
+               
               } else if ((s === 2) && (id > 43 && id < 64) && (y === 0) && (tetro[Rows(tetro) - 1][0] === 33 && x + Rows(tetro) - 1 === 19)) {
+                redTurn = 0
+                greenTurn = 1
                 return testPosition0 = true;
               }
               else if ((s === 3) && (id > 63) && (tetro[Rows(tetro) - 1][Cols(tetro) - 1] === 44 && x + Rows(tetro) - 1 === 19 && y + Cols(tetro) - 1 === 19)) {
+                greenTurn = 0
+                blueTurn = 1
                 return testPosition0 = true;
               }
             }
@@ -119,8 +131,6 @@ const Game = () => {
         if (s < 4) {
           currentUser = true;
         }
-        console.log(currentUser)
-
         if (s > 3) {
           testPosition0 = true
 
@@ -165,27 +175,59 @@ const Game = () => {
           if (neighbor(x, y - 1) === false || neighbor(x, y + 1) === false || neighbor(x - 1, y) === false || neighbor(x + 1, y) === false) {
             testNeighbors = false
           };
-
         }
-
         // build shapes
         if ((testBoard) && (testClear) && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0)) {
           const checkUser = () => {
             if ((s - a === 4) && (id < 21)) {
               currentUser = true;
               a = s;
+              blueTurn = 0;
+              yellowTurn = 1;
             } else if ((s - b === 4) && (id > 21 && id < 44)) {
               currentUser = true;
               b = s;
+              yellowTurn = 0;
+              redTurn = 1;
             } else if ((s - c === 4) && (id > 43 && id < 64)) {
               currentUser = true;
               c = s;
+              redTurn = 0;
+              greenTurn = 1;
             } else if ((s - d === 4) && (id > 63)) {
               d = s;
               currentUser = true;
+              greenTurn =0;
+              blueTurn =1;
             }
             return currentUser;
           }
+          
+          // const checkMyTurn = () => {
+            if (blueTurn === 1 && redTurn ===0 && greenTurn === 0 && yellowTurn === 0)  {
+              document.getElementById('player1').classList.remove('notAllowed')
+            } else {
+              document.getElementById('player1').classList.add('notAllowed')
+            }
+
+
+          if (yellowTurn === 1 && redTurn === 0 && greenTurn === 0 && blueTurn === 0) {
+              document.getElementById('player2').classList.remove('notAllowed')
+            } else {
+              document.getElementById('player2').classList.add('notAllowed')
+            }
+          console.log( yellowTurn , greenTurn ,  blueTurn )
+          if (redTurn === 1 && yellowTurn === 0 && greenTurn === 0 && blueTurn === 0) {
+              document.getElementById('player3').classList.remove('notAllowed')
+            } else {
+              document.getElementById('player3').classList.add('notAllowed')
+            }
+          if (greenTurn === 1 && redTurn === 0 && yellowTurn === 0 && blueTurn === 0) {
+              document.getElementById('player4').classList.remove('notAllowed')
+            } else {
+              document.getElementById('player4').classList.add('notAllowed')
+            }
+          
           checkUser();
           if (currentUser) {
             for (let i = 0; i < tetro.length; i++) {
@@ -199,6 +241,11 @@ const Game = () => {
             setS(s + 1);
             document.getElementById(id).classList.add('hidden')
             dispatch(deleteShape())
+          }
+          for (let i =0; i<numCols; i++) {
+            for (let j=0; j<numRows; j++) {
+              
+            }
           }
         }
       })
@@ -219,20 +266,15 @@ const Game = () => {
     }
   }
 
-  const whereIsMyColor = () => {
-    if (id < 22) {
-      return "cyan"
-    }
-  } 
 
-  function changeBackground(e, x, y) {
+  function changeBackground(e, x, y, color) {
     for (let i = 0; i < Rows(tetro); i++) {
       for (let j = 0; j < Cols(tetro); j++) {
         if (y + Cols(tetro) < 21 && x + Rows(tetro) < 21) {
           if (grid[x + i]) {
             if (grid[x + i][y + j]) {
               if (grid[x + i][y + j][0] === 0) {
-                if ((tetro[i][j] !== 0) && (grid[x + i][y + j][0] === 0)) {
+                if ((tetro[i][j] !== 0) && ( !String(grid[x + i][y + j][1]).includes("shape")) && (!document.getElementById(id).classList.contains("hidden"))) {
                   let id = (`${x + i}-${y + j}`)
                   document.getElementById(id).style.background = color;
                 }
@@ -240,28 +282,10 @@ const Game = () => {
             }
           }
         }
-
       }
     }
   } 
-
-  function renderBackground(e, x, y) {
-    for (let i = 0; i < Rows(tetro); i++) {
-      for (let j = 0; j < Cols(tetro); j++) {
-        if (y + Cols(tetro) < 21 && x + Rows(tetro) < 21) {
-          if (grid[x + i]) {
-            if (grid[x + i][y + j]) {
-                if ((tetro[i][j] !== 0) && (grid[x + i][y + j][0] === 0)) {
-                  let id = (`${x + i}-${y + j}`)
-                  document.getElementById(id).style.background = 'grey'
-                } 
-            }
-          }
-        }
-      }
-    }
-  }
-
+ 
   return (
     <>
       <div className='App'>
@@ -279,8 +303,8 @@ const Game = () => {
             key={`${i}-${k}`}
             id={`${i}-${k}`}
             onClick={() => { clickMe(i, k); }}
-            onMouseEnter={e => changeBackground(e, i, k)}
-            onMouseLeave={e => renderBackground(e, i, k)}
+            onMouseEnter={e => changeBackground(e, i, k, color)}
+            onMouseLeave={e =>changeBackground(e, i, k, 'grey')}
             style={{
               width: 40, height: 40,
               backgroundColor: background(i, k),

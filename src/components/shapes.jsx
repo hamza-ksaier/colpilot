@@ -44,8 +44,8 @@ export const Shapes = () => {
     }
     return (
         <>
-            <div className="player1" >
-                <div className="title">
+            <div id="player1" >
+                <div className="title" >
                     <u>Player 1</u>
                    
                 </div>
@@ -74,12 +74,11 @@ export const Shapes = () => {
                     })}
                 </div>
             </div>
-            <div className="player2" >
+            <div id="player2" className='notAllowed'>
                 <div className="title">
                     <u>Player 2</u>
                 </div>
                 <div className="tetrominos">
-
                     {tetro2?.map((shape, num) => {
                         const returnn = cleanMatrix(shape)?.map((rows, i) => {
                             return rows?.map((col, j) => {
@@ -106,11 +105,11 @@ export const Shapes = () => {
             </div>
             <div className="player3-4">
 
-            <div className="player3" >
+                <div id="player3" className='notAllowed'>
                 <div className="title">
                     <u>Player 3</u>
                 </div>
-                <div className="tetrominos">
+                    <div className="tetrominos"> 
 
                     {tetro3?.map((shape, num) => {
                         const returnn = cleanMatrix(shape)?.map((rows, i) => {
@@ -136,11 +135,11 @@ export const Shapes = () => {
                     })}
                 </div>
             </div> 
-            <div className="player4" >
+                <div id="player4" className='notAllowed'>
                 <div className="title">
                     <u>Player 4</u>
                 </div>
-                <div className="tetrominos">
+                    <div className="tetrominos">
 
                     {tetro4?.map((shape, num) => {
                         const returnn = cleanMatrix(shape)?.map((rows, i) => {

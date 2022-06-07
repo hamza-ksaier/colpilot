@@ -51,13 +51,14 @@ body {
 .hidden{
     display:none !important;
 }
-.player1 {
+#player1 {
     width: fit-content;
     position: absolute;
     top: 100px;
     margin-left: 90px;
+    /* cursor: not-allowed; */
 }
-.player2 {
+#player2 {
     width: fit-content;
     position: absolute;
     top: 100px;
@@ -73,4 +74,11 @@ body {
     font-size: 40px;
     color: aliceblue;
 }
+.notAllowed {
+    background-color: aliceblue;
+    opacity: 60%;
+    cursor: not-allowed;
+    user-select: none;
+}
+
 
