@@ -3,10 +3,18 @@ import TETROMINOS from "../../constants/tetrominos";
 
 const initialState = {
     tetrominos: TETROMINOS,
-    id:21
-    
+    id:21,
+    currentplayer:2,
+     blueTurn : false,
+     yellowTurn : false,
+     redTurn : false,
+     greenTurn : false
 };
 
+let a = 0;
+let b = 0;
+let c = 0;
+let d = 5;
 
 export const tetrominosSlice = createSlice({
     name: "tetrominos",
@@ -45,22 +53,40 @@ export const tetrominosSlice = createSlice({
             let matrix = searchShapeById.shape;
            // flip the matrix
             for (let i = 0; i < matrix.length; i++) {
-
                 for (let j = 0; j < Math.floor(matrix[i].length / 2); j++) {
-
                     [matrix[i][j], matrix[i][matrix[i].length - j - 1]] = [
-
                         matrix[i][matrix[i].length - j - 1],
-
                         matrix[i][j],
                     ];
                 }
             }
             state.tetrominos.find((t) => t.id === state.id).shape = matrix
+        },
+        playTurn : (state)=> {
+            state.currentplayer = state.currentplayer+ 1
+        },
+        myTern : (state) => {
+        if ((state.currentplayer === 2) || (state.currentplayer - d === 1)) {
+            a = state.currentplayer;
+            state.greenTurn = false;
+            state.blueTurn = true
+        } else if ((state.currentplayer === 3) || (state.currentplayer - a === 1)) {
+            state.blueTurn = false;
+            b = state.currentplayer;
+            state.yellowTurn = true
+        } else if ((state.currentplayer === 4) || (state.currentplayer - b === 1)) {
+            state.yellowTurn = false;
+            c = state.currentplayer;
+            state.redTurn = true
+        } else if ((state.currentplayer === 5) || (state.currentplayer - c === 1)) {
+            state.redTurn = false;
+            d = state.currentplayer;
+            state.greenTurn = true
         }
+    }
     },
 });
 
-export const { placeShape, deleteShape, transpose, flip} = tetrominosSlice.actions;
+export const { placeShape, deleteShape, transpose, flip, playTurn , myTern} = tetrominosSlice.actions;
 
 export default tetrominosSlice.reducer;

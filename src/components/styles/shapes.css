@@ -51,14 +51,14 @@ body {
 .hidden{
     display:none !important;
 }
-#player1 {
+.player1  {
     width: fit-content;
     position: absolute;
     top: 100px;
     margin-left: 90px;
     /* cursor: not-allowed; */
 }
-#player2 {
+.player2 {
     width: fit-content;
     position: absolute;
     top: 100px;
@@ -75,8 +75,18 @@ body {
     color: aliceblue;
 }
 .notAllowed {
+     display: flex;
+    justify-content: center;
+    max-width: 670px;
+    margin: auto;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+    max-height: 450px;
+    overflow: hidden;
+    margin-bottom: 30px;
     background-color: aliceblue;
-    opacity: 60%;
+    opacity: 20%;
     cursor: not-allowed;
     user-select: none;
 }

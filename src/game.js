@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import produce, { current } from 'immer';
+import produce from 'immer';
 import Shapes from './components/shapes';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteShape } from './store/slices/tetrominos';
+import { deleteShape , playTurn } from './store/slices/tetrominos';
 import { cleanMatrix } from './utils/cleanMatrix';
 import './game.css';
 import Cols from './utils/numberCols'
@@ -21,9 +21,7 @@ const Game = () => {
   const [s, setS] = useState(0);
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.tetrominos);
-  const { tetrominos } = useSelector((state) => state.tetrominos);
-
-
+  const { tetrominos , blueTurn , redTurn , yellowTurn , greenTurn, currentPlayer } = useSelector((state) => state.tetrominos);
   const tetro = cleanMatrix(tetrominos[id].shape);
   let jokerCenter = 11;
   let jokerCorner = 11;
@@ -46,13 +44,10 @@ const Game = () => {
     jokerCenter = 4;
     color = "green"
   }
+
   let currentUser = false;
-  let blueTurn = 1;
-  let yellowTurn = 0;
-  let redTurn = 0;
-  let greenTurn = 0;
+
   const clickMe = (x, y) => {
-   
     setGrid(g => {
       return produce(g, gridCopy => {
         // Condition of adjecent
@@ -97,23 +92,15 @@ const Game = () => {
             for (let j = 0; j < tetro[i].length; j++) {
               if ((s === 0 && x === 0 && y === 0 && id < 21 && tetro[0][0] === 11)
               ) {
-                blueTurn = 0;
-                yellowTurn = 1;
                 return testPosition0 = true;
               }
               else if ((s === 1) && (id > 21 && id < 44) && (x === 0) && (tetro[0][Cols(tetro) - 1] === 22 && y + Cols(tetro) - 1 === 19)) {
-                yellowTurn = 0
-                redTurn = 1
                 return testPosition0 = true;
                
               } else if ((s === 2) && (id > 43 && id < 64) && (y === 0) && (tetro[Rows(tetro) - 1][0] === 33 && x + Rows(tetro) - 1 === 19)) {
-                redTurn = 0
-                greenTurn = 1
                 return testPosition0 = true;
               }
               else if ((s === 3) && (id > 63) && (tetro[Rows(tetro) - 1][Cols(tetro) - 1] === 44 && x + Rows(tetro) - 1 === 19 && y + Cols(tetro) - 1 === 19)) {
-                greenTurn = 0
-                blueTurn = 1
                 return testPosition0 = true;
               }
             }
@@ -126,14 +113,11 @@ const Game = () => {
         // Condition Corner 
         let testCorner = true;
         let testNeighbors = true;
-        console.log(a, b, c, d, s)
-
         if (s < 4) {
           currentUser = true;
         }
         if (s > 3) {
           testPosition0 = true
-
 
           // function of corner shapes
           const corner = (X, Y) => {
@@ -176,60 +160,25 @@ const Game = () => {
             testNeighbors = false
           };
         }
-        // build shapes
-        if ((testBoard) && (testClear) && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0)) {
-          const checkUser = () => {
-            if ((s - a === 4) && (id < 21)) {
-              currentUser = true;
-              a = s;
-              blueTurn = 0;
-              yellowTurn = 1;
-            } else if ((s - b === 4) && (id > 21 && id < 44)) {
-              currentUser = true;
-              b = s;
-              yellowTurn = 0;
-              redTurn = 1;
-            } else if ((s - c === 4) && (id > 43 && id < 64)) {
-              currentUser = true;
-              c = s;
-              redTurn = 0;
-              greenTurn = 1;
-            } else if ((s - d === 4) && (id > 63)) {
-              d = s;
-              currentUser = true;
-              greenTurn =0;
-              blueTurn =1;
-            }
-            return currentUser;
+        const checkUser = () => {
+          
+          if ((blueTurn) && (id < 21)) {
+            currentUser = true;
+          } else if ((yellowTurn) && (id > 21 && id < 44)) {
+            currentUser = true;
+          } else if ((redTurn) && (id > 43 && id < 64)) {
+            currentUser = true;
+          } else if ((greenTurn) && (id > 63)) {
+            currentUser = true;
+          } else {
+             currentUser = false
           }
           
-          // const checkMyTurn = () => {
-            if (blueTurn === 1 && redTurn ===0 && greenTurn === 0 && yellowTurn === 0)  {
-              document.getElementById('player1').classList.remove('notAllowed')
-            } else {
-              document.getElementById('player1').classList.add('notAllowed')
-            }
+        }
+        checkUser();
 
-
-          if (yellowTurn === 1 && redTurn === 0 && greenTurn === 0 && blueTurn === 0) {
-              document.getElementById('player2').classList.remove('notAllowed')
-            } else {
-              document.getElementById('player2').classList.add('notAllowed')
-            }
-          console.log( yellowTurn , greenTurn ,  blueTurn )
-          if (redTurn === 1 && yellowTurn === 0 && greenTurn === 0 && blueTurn === 0) {
-              document.getElementById('player3').classList.remove('notAllowed')
-            } else {
-              document.getElementById('player3').classList.add('notAllowed')
-            }
-          if (greenTurn === 1 && redTurn === 0 && yellowTurn === 0 && blueTurn === 0) {
-              document.getElementById('player4').classList.remove('notAllowed')
-            } else {
-              document.getElementById('player4').classList.add('notAllowed')
-            }
-          
-          checkUser();
-          if (currentUser) {
+        // build shapes
+        if ((testBoard) && (testClear) && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0) && currentUser) { 
             for (let i = 0; i < tetro.length; i++) {
               for (let j = 0; j < tetro[i].length; j++) {
                 if ((tetro[i][j] !== 0)) {
@@ -238,19 +187,17 @@ const Game = () => {
                 }
               }
             }
+          dispatch(playTurn())
             setS(s + 1);
             document.getElementById(id).classList.add('hidden')
             dispatch(deleteShape())
           }
-          for (let i =0; i<numCols; i++) {
-            for (let j=0; j<numRows; j++) {
-              
-            }
-          }
-        }
+        // }
       })
     })
+
   }
+
   let backgroundColor;
   const background = (i, k) => {
     if (String(grid[i][k][0]).includes(1)) {
@@ -265,6 +212,7 @@ const Game = () => {
       return backgroundColor = "grey";
     }
   }
+ 
 
 
   function changeBackground(e, x, y, color) {
