@@ -8,7 +8,7 @@ body {
 .tetrominos {
     display: flex;
     justify-content: center;
-    max-width: 670px;
+    max-width: 470px;
     margin: auto;
     flex-wrap: wrap;
     gap: 20px;
@@ -19,26 +19,26 @@ body {
 }
 .case {
     background-color: aqua;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 1px solid black;
 }
 .case2 {
     background-color: yellow;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 1px solid black;
 }
 .case3 {
     background-color: red;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 1px solid black;
 }
 .case4 {
     background-color: green;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border: 1px solid black;
 }
 .title {
@@ -56,7 +56,6 @@ body {
     position: absolute;
     top: 100px;
     margin-left: 90px;
-    /* cursor: not-allowed; */
 }
 .player2 {
     width: fit-content;
@@ -77,7 +76,7 @@ body {
 .notAllowed {
      display: flex;
     justify-content: center;
-    max-width: 670px;
+    max-width: 470px;
     margin: auto;
     flex-wrap: wrap;
     gap: 20px;

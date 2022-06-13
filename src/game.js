@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import produce from 'immer';
 import Shapes from './components/shapes';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteShape , playTurn } from './store/slices/tetrominos';
+import { deleteShape , playTurn , myScore} from './store/slices/tetrominos';
 import { cleanMatrix } from './utils/cleanMatrix';
 import './game.css';
 import Cols from './utils/numberCols'
 import Rows from './utils/numberRows';
+import Restart from './components/buttons';
+import Scores from './components/scores';
 const numRows = 20;
 const numCols = 20;
 let a = 0;
@@ -21,12 +23,11 @@ const Game = () => {
   const [s, setS] = useState(0);
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.tetrominos);
-  const { tetrominos , blueTurn , redTurn , yellowTurn , greenTurn, currentPlayer } = useSelector((state) => state.tetrominos);
+  const { tetrominos , blueTurn , redTurn , yellowTurn , greenTurn, currentPlayer ,score1,score2, score3, score4 } = useSelector((state) => state.tetrominos);
   const tetro = cleanMatrix(tetrominos[id].shape);
   let jokerCenter = 11;
   let jokerCorner = 11;
   let color ;
-
   if (id < 21) {
     jokerCorner = 11;
     jokerCenter = 1;
@@ -44,6 +45,7 @@ const Game = () => {
     jokerCenter = 4;
     color = "green"
   }
+
 
   let currentUser = false;
 
@@ -85,7 +87,9 @@ const Game = () => {
             }
           }
         }
-        
+        if (testClear=== false && tetro[0][0]===0 && gridCopy[x][y][1] !== "clear") {
+          testClear = true
+        }
         let testPosition0 = false;
         const Position = () => {
           for (let i = 0; i < tetro.length; i++) {
@@ -108,7 +112,6 @@ const Game = () => {
           return testPosition0;
         }
         Position();
-
 
         // Condition Corner 
         let testCorner = true;
@@ -191,6 +194,7 @@ const Game = () => {
             setS(s + 1);
             document.getElementById(id).classList.add('hidden')
             dispatch(deleteShape())
+            dispatch(myScore())
           }
         // }
       })
@@ -241,7 +245,7 @@ const Game = () => {
         <div className="Board"
           style={{
             display: "grid",
-            gridTemplateColumns: `repeat(${numCols}, 40px)`,
+            gridTemplateColumns: `repeat(${numCols}, 30px)`,
             justifyContent: "center",
             marginTop: "120px"
           }}>
@@ -254,7 +258,7 @@ const Game = () => {
             onMouseEnter={e => changeBackground(e, i, k, color)}
             onMouseLeave={e =>changeBackground(e, i, k, 'grey')}
             style={{
-              width: 40, height: 40,
+              width: 30, height: 30,
               backgroundColor: background(i, k),
               border: "solid 1px black"
             }}> </div>))}
@@ -262,6 +266,8 @@ const Game = () => {
         </div>
 
         <Shapes />
+        <Restart/>
+        <Scores/>
       </div>
 
     </>

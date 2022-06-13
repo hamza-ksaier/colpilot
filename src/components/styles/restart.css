@@ -1,0 +1,26 @@
+
+.restartButton {
+  background-color: darkgoldenrod;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  width: 115px;
+  height: 45px;
+  font-size: 22px;
+cursor:pointer;
+}
+.skipturnButton {
+  background-color: dodgerblue;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  width: 140px;
+  height: 45px;
+cursor:pointer;
+  font-size: 22px;
+}
+
+
+
+
+

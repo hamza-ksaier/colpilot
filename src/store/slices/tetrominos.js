@@ -8,7 +8,12 @@ const initialState = {
      blueTurn : false,
      yellowTurn : false,
      redTurn : false,
-     greenTurn : false
+     greenTurn : false,
+    score : 0,
+    score1: 0,
+    score2: 0,
+    score3: 0,
+    score4: 0,
 };
 
 let a = 0;
@@ -83,10 +88,29 @@ export const tetrominosSlice = createSlice({
             d = state.currentplayer;
             state.greenTurn = true
         }
-    }
+    },
+        myScore : (state) => {
+            let searchShapeById = state.tetrominos.find(tetro => tetro.id === state.id);
+            let matrix = searchShapeById.shape;
+
+                for (let i = 0; i < matrix.length; i++) {
+                    for (let j = 0; j < matrix[i].length; j++) {
+                        if (state.blueTurn === true && matrix[i][j] !== 0){
+                            state.score1++
+                        } else if (state.yellowTurn === true && matrix[i][j] !== 0) {
+                            state.score2++
+                        } else if (state.redTurn === true && matrix[i][j] !== 0) {
+                            state.score3++
+                        } else if(state.greenTurn === true && matrix[i][j] !== 0) {
+                        state.score4++
+                        }
+                    }
+                }
+            }
+        
     },
 });
 
-export const { placeShape, deleteShape, transpose, flip, playTurn , myTern} = tetrominosSlice.actions;
+export const { placeShape, deleteShape, transpose, flip, playTurn , myTern , myScore} = tetrominosSlice.actions;
 
 export default tetrominosSlice.reducer;

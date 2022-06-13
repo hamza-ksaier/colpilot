@@ -41,7 +41,6 @@ export const Shapes = () => {
         }
     }
     dispatch(myTern())
-    console.log(currentplayer)
 
     return (
         <>
@@ -68,9 +67,9 @@ export const Shapes = () => {
                             tabIndex="0"
                             style={{
                                 display: 'grid',
-                                gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                gridTemplateRows: `repeat(${numRows(shape)}, 20px)`,
                                 gridTemplateColumns: `repeat(${numCols(shape)
-                                    }, 30px)`
+                                    }, 20px)`
                             }}>{returnn}</div>
                     })}
                 </div>
@@ -97,9 +96,9 @@ export const Shapes = () => {
                             tabIndex="0"
                             style={{
                                 display: 'grid',
-                                gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                gridTemplateRows: `repeat(${numRows(shape)}, 20px)`,
                                 gridTemplateColumns: `repeat(${numCols(shape)
-                                    }, 30px)`
+                                    }, 20px)`
                             }}>{returnn}</div>
                     })}
                 </div>
@@ -129,9 +128,9 @@ export const Shapes = () => {
                                 tabIndex="0"
                                 style={{
                                     display: 'grid',
-                                    gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                    gridTemplateRows: `repeat(${numRows(shape)}, 20px)`,
                                     gridTemplateColumns: `repeat(${numCols(shape)
-                                        }, 30px)`
+                                        }, 20px)`
                                 }}>{returnn}</div>
                         })}
                     </div>
@@ -157,9 +156,9 @@ export const Shapes = () => {
                                 tabIndex="0"
                                 style={{
                                     display: 'grid',
-                                    gridTemplateRows: `repeat(${numRows(shape)}, 30px)`,
+                                    gridTemplateRows: `repeat(${numRows(shape)}, 20px)`,
                                     gridTemplateColumns: `repeat(${numCols(shape)
-                                        }, 30px)`
+                                        }, 20px)`
                                 }}>{returnn}</div>
                         })}
                     </div>
