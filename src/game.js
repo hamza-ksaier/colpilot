@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import produce from 'immer';
 import Shapes from './components/shapes';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteShape , playTurn , myScore} from './store/slices/tetrominos';
+import { deleteShape, playTurn, myScore } from './store/slices/tetrominos';
 import { cleanMatrix } from './utils/cleanMatrix';
 import './game.css';
 import Cols from './utils/numberCols'
@@ -16,18 +16,18 @@ let b = 1;
 let c = 2;
 let d = 3;
 const Game = () => {
-  
+
   //Board (Grid)
   const [grid, setGrid] = useState(() => Array.from(Array(numCols), () =>
     new Array(numRows).fill([0, 'clear'])));
   const [s, setS] = useState(0);
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.tetrominos);
-  const { tetrominos , blueTurn , redTurn , yellowTurn , greenTurn, currentPlayer ,score1,score2, score3, score4 } = useSelector((state) => state.tetrominos);
+  const { tetrominos, blueTurn, redTurn, yellowTurn, greenTurn, currentPlayer, score1, score2, score3, score4 } = useSelector((state) => state.tetrominos);
   const tetro = cleanMatrix(tetrominos[id].shape);
   let jokerCenter = 11;
   let jokerCorner = 11;
-  let color ;
+  let color;
   if (id < 21) {
     jokerCorner = 11;
     jokerCenter = 1;
@@ -87,7 +87,7 @@ const Game = () => {
             }
           }
         }
-        if (testClear=== false && tetro[0][0]===0 && gridCopy[x][y][1] !== "clear") {
+        if (testClear === false && tetro[0][0] === 0 && gridCopy[x][y][1] !== "clear") {
           testClear = true
         }
         let testPosition0 = false;
@@ -100,7 +100,7 @@ const Game = () => {
               }
               else if ((s === 1) && (id > 21 && id < 44) && (x === 0) && (tetro[0][Cols(tetro) - 1] === 22 && y + Cols(tetro) - 1 === 19)) {
                 return testPosition0 = true;
-               
+
               } else if ((s === 2) && (id > 43 && id < 64) && (y === 0) && (tetro[Rows(tetro) - 1][0] === 33 && x + Rows(tetro) - 1 === 19)) {
                 return testPosition0 = true;
               }
@@ -164,7 +164,7 @@ const Game = () => {
           };
         }
         const checkUser = () => {
-          
+
           if ((blueTurn) && (id < 21)) {
             currentUser = true;
           } else if ((yellowTurn) && (id > 21 && id < 44)) {
@@ -174,28 +174,28 @@ const Game = () => {
           } else if ((greenTurn) && (id > 63)) {
             currentUser = true;
           } else {
-             currentUser = false
+            currentUser = false
           }
-          
+
         }
         checkUser();
 
         // build shapes
-        if ((testBoard) && (testClear) && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0) && currentUser) { 
-            for (let i = 0; i < tetro.length; i++) {
-              for (let j = 0; j < tetro[i].length; j++) {
-                if ((tetro[i][j] !== 0)) {
-                  gridCopy[i + x][j + y][0] = tetro[i][j]
-                  gridCopy[i + x][j + y][1] = `shape ${s}`
-                }
+        if ((testBoard) && (testClear) && (testCorner) && (testNeighbors) && (id !== 21) && (testPosition0) && currentUser) {
+          for (let i = 0; i < tetro.length; i++) {
+            for (let j = 0; j < tetro[i].length; j++) {
+              if ((tetro[i][j] !== 0)) {
+                gridCopy[i + x][j + y][0] = tetro[i][j]
+                gridCopy[i + x][j + y][1] = `shape ${s}`
               }
             }
-          dispatch(playTurn())
-            setS(s + 1);
-            document.getElementById(id).classList.add('hidden')
-            dispatch(deleteShape())
-            dispatch(myScore())
           }
+          dispatch(playTurn())
+          setS(s + 1);
+          document.getElementById(id).classList.add('hidden')
+          dispatch(deleteShape())
+          dispatch(myScore())
+        }
         // }
       })
     })
@@ -216,7 +216,7 @@ const Game = () => {
       return backgroundColor = "grey";
     }
   }
- 
+
 
 
   function changeBackground(e, x, y, color) {
@@ -226,7 +226,7 @@ const Game = () => {
           if (grid[x + i]) {
             if (grid[x + i][y + j]) {
               if (grid[x + i][y + j][0] === 0) {
-                if ((tetro[i][j] !== 0) && ( !String(grid[x + i][y + j][1]).includes("shape")) && (!document.getElementById(id).classList.contains("hidden"))) {
+                if ((tetro[i][j] !== 0) && (!String(grid[x + i][y + j][1]).includes("shape")) && (!document.getElementById(id).classList.contains("hidden"))) {
                   let id = (`${x + i}-${y + j}`)
                   document.getElementById(id).style.background = color;
                 }
@@ -236,12 +236,12 @@ const Game = () => {
         }
       }
     }
-  } 
- 
+  }
+
   return (
     <>
       <div className='App'>
-        <div className='blokus-title'>Blokus Game</div>
+        <div className='blokus-title'>Blokus  Game</div>
         <div className="Board"
           style={{
             display: "grid",
@@ -256,7 +256,7 @@ const Game = () => {
             id={`${i}-${k}`}
             onClick={() => { clickMe(i, k); }}
             onMouseEnter={e => changeBackground(e, i, k, color)}
-            onMouseLeave={e =>changeBackground(e, i, k, 'grey')}
+            onMouseLeave={e => changeBackground(e, i, k, 'grey')}
             style={{
               width: 30, height: 30,
               backgroundColor: background(i, k),
@@ -266,8 +266,8 @@ const Game = () => {
         </div>
 
         <Shapes />
-        <Restart/>
-        <Scores/>
+        <Restart />
+        <Scores />
       </div>
 
     </>
